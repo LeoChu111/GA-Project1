@@ -3,12 +3,27 @@ let dice1
 let dice2 
 let rollCount = 0
 let userpoint = 0
+let placeToBet = [4,5,6,8,9,10]
+let playerBetNumber
+let playerBetAmount
+let depositAmount
+let exchangeAmount
 const rollBtn = document.querySelector('.roll')
+const passlineBtn = document.querySelector('.passline')
+const depositBtn = document.querySelector('.deposit')
+const exchangeBtn = document.querySelector('.exchange')
 let diceImage1 = document.getElementById("dice1")
 let diceImage2 = document.getElementById("dice2")
+let balance = document.querySelector('.balance')
+let cheque = document.querySelector('.cheque')
 
+depositBtn.addEventListener('click', handleDeposit)
+exchangeBtn.addEventListener('click', handleExchange)
 rollBtn.addEventListener('click', handleRoll)
-rollBtn.addEventListener('click', handlePassline)
+passlineBtn.addEventListener('click', function(){
+    rollBtn.addEventListener('click', handlePassline)
+    passlineBtn.style.display = 'none';
+})
 function handleRoll() {
     rollCount += 1
     dice1 = Math.floor(Math.random() * 6) + 1
@@ -41,24 +56,46 @@ function handleRoll() {
         diceImage2.src = "https://thumbs.dreamstime.com/z/red-dice-games-casinos-points-d-illustration-isolation-red-dice-games-casinos-points-d-rendering-isolation-170220936.jpg?w=768"
     }
 }
+function handleDeposit() {
+    depositAmount = prompt('Please enter amount you want to deposit')
+    balance.innerText = Number(depositAmount)
+}
+function handleExchange() {
+    exchangeAmount = prompt('Please enter amount you want to exchange')
+    if (balance.innerText < exchangeAmount) {
+        alert(`You don't have enough balance`)
+    } else if (balance.innerText >= exchangeAmount) {
+        cheque.innerText = Number(exchangeAmount)
+        balance.innerText = Number(balance.innerText) - exchangeAmount
+    }
+}
 function bet() {
-
+    playerBetNumber = prompt('Please select number you want to bet')
+    if (playerBetNumber === 4 || playerBetNumber === 5 || playerBetNumber === 9 || playerBetNumber === 10) {
+        playerBetAmount = prompt('Please enter how much you want to bet')
+        if (playerBetAmount < 5) {
+            alert('The minimum bet amount for 4,5,9,10 is 5')
+        } else {
+            alert(`You have bet ${playerBetAmount} on Number ${playerBetNumber}`)
+        }
+    }
 }
 // win condition
 //1. passline ratio 1
 function handlePassline () {
     if ((dice1 + dice2) === 7 && rollCount === 1|| (dice1 + dice2) === 11 && rollCount === 1) {
-        console.log('you win');
+        alert('You win');
     } else if ((dice1 + dice2) === 2 && rollCount === 1|| (dice1 + dice2) === 3 && rollCount === 1|| (dice1 + dice2) === 12 && rollCount === 1)  {
-        console.log('you lose')
+        alert('You lose')
     } else if (rollCount === 1){
         //assign point to user's point
         userpoint = dice1 + dice2
+        alert(`Now ${userpoint} is your bet`)
     }
     if (rollCount > 1 && (dice1 + dice2) === userpoint && (dice1 + dice2)!== 7) {
-        console.log('you win')
+        alert('You win')
     } else if (rollCount > 1 && (dice1 + dice2) === 7) {
-        console.log('you lose')
+        alert('You lose')
     }
 }
 console.log(handleRoll())
