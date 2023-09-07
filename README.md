@@ -16,6 +16,8 @@ Javascript, html, CSS
 3. Player select a rule to play, there are two rules in the game which is:
 * Passline: Players are betting that on the first roll 7 or 11 rolls to win, 2, 3, or 12 loses. If a number such as: 4, 5, 6, 8, 9 or 10 rolls, the number must repeat before a seven to win.
 * Place bets: A Place bet wins if the number you bet on is rolled and loses if a 7 is rolled. The result of first roll does not count.
+4. Player enter bet amount and the number to bet(on placebets rule only), then click on bet button.
+5. Player click on roll button until win or lose.
 
 ## Getting Started
 You can play by clicking [this](https://leochu111.github.io/GA-Project1/).
