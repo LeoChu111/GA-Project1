@@ -12,8 +12,14 @@
         <section>
             <p>Your Balance: <span class="balance">0</span></p>
             <P>Your Cheques: <span class="cheque">0</span></p>
+            <input class="depositA" type="number">
             <button class="deposit">Deposit</button>
+            <span id="error"></span>
+            <br>
+            <input class="exchangeA" type="number">
             <button class="exchange">Exchange Cheques</button>
+            <span id="error1"></span>
+            <br>
             <p>Cheques Type:</p>
             <img src="https://crapssecrets.files.wordpress.com/2019/01/chip-1.jpg" alt="">
             <img src="https://crapssecrets.files.wordpress.com/2019/01/chip-5.jpg" alt="">
@@ -21,18 +27,27 @@
             <img src="https://crapssecrets.files.wordpress.com/2019/01/chip-100.jpg" alt="">
             <img src="https://crapssecrets.files.wordpress.com/2019/01/chip-500.jpg" alt="">
             <img src="https://crapssecrets.files.wordpress.com/2019/01/chip-1000.jpg" alt="">
-            <p>Please choose rule:</p>
+        </section>
+        <section>
+            <p class="choose">Please choose rule:</p>
             <button class="rule" id="passline">Passline</button>
             <button class="rule" id="bet">Place Bets</button>
+            <P class="text">Please select number you want to bet: <input class="betN" type="number"></P>
+            <span id="error2"></span>
+            <p class="text2">Please enter how much you want to bet: <input class="betA" type="number"></p>
+            <span id="error3"></span>
+            <p class="userpoint"></p>
         </section>
     </div>
     <p>Your bet amount: <span class="betamount">0</span></p>
     <p class="betnumber">You bet on number: ?</p>
+    <button class="betBtn">Bet</button>
     <button class="roll">Roll</button>
+    <span id="error4"></span>
     <img id="dice1" src="" alt="">
     <img id="dice2" src="" alt="">
     <button class="restart">Start New Game</button>
-    <footer></footer>
+    <footer class="result"></footer>
     <script src="app.js"></script>
 </body>
 </html>
