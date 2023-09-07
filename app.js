@@ -15,6 +15,7 @@ const placeBetBtn = document.querySelector('#bet')
 const depositBtn = document.querySelector('.deposit')
 const exchangeBtn = document.querySelector('.exchange')
 const ruleBtn = document.querySelectorAll('.rule')
+const restartBtn = document.querySelector('.restart')
 let diceImage1 = document.getElementById("dice1")
 let diceImage2 = document.getElementById("dice2")
 let balance = document.querySelector('.balance')
@@ -25,14 +26,15 @@ let numberBet = document.querySelector('.betnumber')
 depositBtn.addEventListener('click', handleDeposit)
 exchangeBtn.addEventListener('click', handleExchange)
 rollBtn.addEventListener('click', handleRoll)
+passlineBtn.addEventListener('click', handlePassline)
 passlineBtn.addEventListener('click', function(){
-    rollBtn.addEventListener('click', handlePassline)
-    disableButtons()
+    rollBtn.addEventListener('click', handlePasslineResult)
 })
 placeBetBtn.addEventListener('click', handlePlaceBet)
 placeBetBtn.addEventListener('click', function(){
     rollBtn.addEventListener('click', handlePlaceBetResult)
 })
+restartBtn.addEventListener('click', handleRestart)
 function disableButtons() {
     for(let button of ruleBtn) {
         button.style.display = 'none';
@@ -78,7 +80,7 @@ function handleRoll() {
 }
 function handleDeposit() {
     depositAmount = prompt('Please enter amount you want to deposit')
-    if (isNaN(depositAmount) === true || depositAmount === '' || Number(depositAmount) < 0){
+    if (isNaN(depositAmount) === true || depositAmount === '' || Number(depositAmount) < 0 || Number(depositAmount) % 1 !== 0){
         alert('Please enter valid number')
     } else {
         balance.innerText = Number(balance.innerText) + Number(depositAmount)
@@ -86,11 +88,11 @@ function handleDeposit() {
 }
 function handleExchange() {
     exchangeAmount = prompt('Please enter amount you want to exchange')
-    if (isNaN(exchangeAmount) === true || exchangeAmount === '' || Number(exchangeAmount) < 0 || Number(exchangeAmount) > Number(balance.innerText)){
+    if (isNaN(exchangeAmount) === true || exchangeAmount === '' || Number(exchangeAmount) < 0 || Number(exchangeAmount) > Number(balance.innerText) || Number(exchangeAmount) % 1 !== 0){
         alert('Please enter valid number')
-    } else if (balance.innerText < exchangeAmount) {
+    } else if (Number(balance.innerText) <  Number(exchangeAmount)) {
         alert(`You don't have enough balance`)
-    } else if (balance.innerText >= exchangeAmount) {
+    } else if (Number(balance.innerText) >= Number(exchangeAmount)) {
         cheque.innerText = Number(cheque.innerText) + Number(exchangeAmount)
         balance.innerText = Number(balance.innerText) - Number(exchangeAmount)
     } 
@@ -98,11 +100,11 @@ function handleExchange() {
 function handlePlaceBet() {
     if(rollCount === 0) {
         playerBetNumber = prompt('Please select number you want to bet')
-        if (isNaN(playerBetNumber) === true || playerBetNumber === '' || Number(playerBetNumber) < 0) {
+        if (isNaN(playerBetNumber) === true || playerBetNumber === '' || Number(playerBetNumber) < 0 || Number(playerBetNumber) % 1 !== 0) {
             alert('Please enter valid number')
         } else if (Number(playerBetNumber) === 4 || Number(playerBetNumber) === 5 || Number(playerBetNumber) === 9 || Number(playerBetNumber) === 10) {
             playerBetAmount = prompt('Please enter how much you want to bet')
-            if(isNaN(playerBetAmount) === true) {
+            if(isNaN(playerBetAmount) === true || Number(playerBetAmount) % 1 !== 0) {
                 alert('Please enter valid number')
             } else if (Number(playerBetAmount) < 5) {
                 alert('The minimum bet amount for 4,5,9,10 is 5')
@@ -135,37 +137,93 @@ function handlePlaceBet() {
 }
 function handlePlaceBetResult() {
     if(rollCount > 1) {
-        if (numberBet && (dice1 + dice2) === 4 || numberBet && (dice1 + dice2) === 10) {
-            winAmount = Number(playerBetAmount) * 1.8 
+        if (Number(playerBetNumber) === 4 && (dice1 + dice2) === 4 || Number(playerBetNumber) === 10 && (dice1 + dice2) === 10) {
+            winAmount = Math.floor(Number(playerBetAmount) * 1.8)
             cheque.innerText = Number(cheque.innerText) + winAmount
+            rollBtn.style.display = 'none'
+            restartBtn.style.display ='inline'
             alert(`You win $${winAmount}!`)
+        } else if (Number(playerBetNumber) === 5 && (dice1 + dice2) === 5 || Number(playerBetNumber) === 9 && (dice1 + dice2) === 9) {
+            winAmount = Math.floor(Number(playerBetAmount) * 1.4)
+            cheque.innerText = Number(cheque.innerText) + winAmount
+            rollBtn.style.display = 'none'
+            restartBtn.style.display ='inline'
+            alert(`You win $${winAmount}!`)
+        } else if (Number(playerBetNumber) === 6 && (dice1 + dice2) === 6 || Number(playerBetNumber) === 8 && (dice1 + dice2) === 8) {
+            winAmount = Math.floor(Number(playerBetAmount) * 1.17)
+            cheque.innerText = Number(cheque.innerText) + winAmount
+            rollBtn.style.display = 'none'
+            restartBtn.style.display ='inline'
+            alert(`You win $${winAmount}!`)
+        } else if ((dice1 + dice2) === 7) {
+            rollBtn.style.display = 'none'
+            restartBtn.style.display ='inline'
+            alert(`You lose $${playerBetAmount}!`)
         }
     }
 }
-// win condition
-//1. passline ratio 1
-function handlePassline () {
+function handlePassline() {
+    if(rollCount === 0) {
+        playerBetAmount = prompt('Please select amount you want to bet')
+        if (isNaN(playerBetAmount) === true || playerBetAmount === '' || Number(playerBetAmount) < 0 || Number(playerBetAmount) % 1 !== 0) {
+            alert('Please enter valid number')
+        } else if(Number(playerBetAmount) <= Number(cheque.innerText)) {
+            betAmount.innerText = Number(playerBetAmount)
+            cheque.innerText = Number(cheque.innerText) - Number(playerBetAmount)
+            alert(`You have bet ${playerBetAmount} on Passline`)
+            disableButtons()
+        } else {
+            alert(`You don't have enough cheques to bet!`)
+        }
+    }
+}
+function handlePasslineResult() {
     if ((dice1 + dice2) === 7 && rollCount === 1|| (dice1 + dice2) === 11 && rollCount === 1) {
-        alert('You win');
+        winAmount = Number(playerBetAmount) * 2
+        cheque.innerText = Math.floor(Number(cheque.innerText) + winAmount)
+        rollBtn.style.display = 'none'
+        restartBtn.style.display ='inline'
+        alert(`You win $${winAmount}!`)
     } else if ((dice1 + dice2) === 2 && rollCount === 1|| (dice1 + dice2) === 3 && rollCount === 1|| (dice1 + dice2) === 12 && rollCount === 1)  {
-        alert('You lose')
+        rollBtn.style.display = 'none'
+        restartBtn.style.display ='inline'
+        alert(`You lose $${playerBetAmount}!`)
     } else if (rollCount === 1){
         //assign point to user's point
         userpoint = dice1 + dice2
         alert(`Now ${userpoint} is your bet`)
     }
     if (rollCount > 1 && (dice1 + dice2) === userpoint && (dice1 + dice2)!== 7) {
-        alert('You win')
+        winAmount = Number(playerBetAmount) * 2
+        cheque.innerText = Number(cheque.innerText) + winAmount
+        rollBtn.style.display = 'none'
+        restartBtn.style.display ='inline'
+        alert(`You win $${winAmount}!`)
     } else if (rollCount > 1 && (dice1 + dice2) === 7) {
-        alert('You lose')
+        rollBtn.style.display = 'none'
+        restartBtn.style.display ='inline'
+        alert(`You lose $${playerBetAmount}!`)
     }
 }
-/*console.log(handleRoll())
-console.log(rollCount)
-console.log(handlePassline())
-console.log(userpoint)
-console.log(handleRoll())
-console.log(rollCount)
-console.log(handlePassline())
-console.log(userpoint) */
-//we need the way to stop the game 
+function handleRestart() {
+    numberBet.innerText = 'You bet on number: ?'
+    betAmount.innerText = 'Your bet amount: 0'
+    for(let button of ruleBtn) {
+        button.style.display = 'inline';
+    }
+    rollBtn.style.display = 'inline'
+    playerBetAmount = ''
+    playerBetNumber = ''
+    rollCount = 0
+    rollBtn.removeEventListener('click', handlePlaceBetResult)
+    rollBtn.removeEventListener('click', handlePasslineResult) 
+    placeBetBtn.addEventListener('click', handlePlaceBet)
+    placeBetBtn.addEventListener('click', function(){
+        rollBtn.addEventListener('click', handlePlaceBetResult)
+    })
+    passlineBtn.addEventListener('click', function(){
+        rollBtn.addEventListener('click', handlePasslineResult)
+    })
+    restartBtn.style.display = 'none';
+}
+
