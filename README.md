@@ -10,9 +10,10 @@ Craps is a casino dice game that involves a great deal of action and strategy, b
 Javascript, html, CSS
 
 ## How to play
-1.Player first need to deposit money by click on deposit button
-2.Player exchange cheques by click on exchange cheques button
-3.Player select a rule to play, there are two rules in the game which is:
+
+1. Player first need to deposit money by click on deposit button.
+2. Player exchange cheques by click on exchange cheques button.
+3. Player select a rule to play, there are two rules in the game which is:
 * Passline: Players are betting that on the first roll 7 or 11 rolls to win, 2, 3, or 12 loses. If a number such as: 4, 5, 6, 8, 9 or 10 rolls, the number must repeat before a seven to win.
 * Place bets: A Place bet wins if the number you bet on is rolled and loses if a 7 is rolled. The result of first roll does not count.
 
