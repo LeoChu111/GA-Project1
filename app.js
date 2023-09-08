@@ -3,6 +3,7 @@ let dice1
 let dice2 
 let rollCount = 0
 let winAmount
+let userpoint
 const rollBtn = document.querySelector('.roll')
 const passlineBtn = document.querySelector('#passline')
 const placeBetBtn = document.querySelector('#bet')
@@ -11,7 +12,6 @@ const exchangeBtn = document.querySelector('.exchange')
 const ruleBtn = document.querySelectorAll('.rule')
 const restartBtn = document.querySelector('.restart')
 const betBtn = document.querySelector('.betBtn')
-let userpoint = document.querySelector('.userpoint')
 let depositAmount = document.querySelector('.depositA')
 let exchangeAmount = document.querySelector('.exchangeA')
 let diceImage1 = document.getElementById("dice1")
@@ -25,6 +25,7 @@ let playerBetAmount = document.querySelector('.betA')
 let result = document.querySelector('.result')
 let textPleaseBetNumber = document.querySelector('.text')
 let textPleaseBetAmount = document.querySelector('.text2')
+let displayUserPoint = document.querySelector('.displayuserpoint')
 let chooseText = document.querySelector('.choose')
 let error = document.querySelector('#error')
 let error1 = document.querySelector('#error1')
@@ -182,23 +183,23 @@ function handlePlaceBetResult() {
             winAmount = Math.floor(Number(playerBetAmount.value) * 1.8)
             cheque.innerText = Number(cheque.innerText) + winAmount
             rollBtn.style.display = 'none'
-            restartBtn.style.display ='inline'
+            restartBtn.style.display ='block'
             result.innerText = `$$$$ You win $${winAmount}! $$$$`
         } else if (Number(playerBetNumber.value) === 5 && (dice1 + dice2) === 5 || Number(playerBetNumber.value) === 9 && (dice1 + dice2) === 9) {
             winAmount = Math.floor(Number(playerBetAmount.value) * 1.4)
             cheque.innerText = Number(cheque.innerText) + winAmount
             rollBtn.style.display = 'none'
-            restartBtn.style.display ='inline'
+            restartBtn.style.display ='block'
             result.innerText = `$$$$ You win $${winAmount}! $$$$`
         } else if (Number(playerBetNumber.value) === 6 && (dice1 + dice2) === 6 || Number(playerBetNumber.value) === 8 && (dice1 + dice2) === 8) {
             winAmount = Math.floor(Number(playerBetAmount.value) * 1.17)
             cheque.innerText = Number(cheque.innerText) + winAmount
             rollBtn.style.display = 'none'
-            restartBtn.style.display ='inline'
+            restartBtn.style.display ='block'
             result.innerText = `$$$$ You win $${winAmount}! $$$$`
         } else if ((dice1 + dice2) === 7) {
             rollBtn.style.display = 'none'
-            restartBtn.style.display ='inline'
+            restartBtn.style.display ='block'
             result.innerText = `$$$$ You lose $${playerBetAmount.value}! $$$$`
         }
     }
@@ -245,25 +246,25 @@ function handlePasslineResult() {
         winAmount = Number(playerBetAmount.value) * 2
         cheque.innerText = Math.floor(Number(cheque.innerText) + winAmount)
         rollBtn.style.display = 'none'
-        restartBtn.style.display ='inline'
+        restartBtn.style.display ='block'
         result.innerText = `$$$$ You win $${winAmount}! $$$$`
     } else if ((dice1 + dice2) === 2 && rollCount === 1|| (dice1 + dice2) === 3 && rollCount === 1|| (dice1 + dice2) === 12 && rollCount === 1)  {
         rollBtn.style.display = 'none'
-        restartBtn.style.display ='inline'
+        restartBtn.style.display ='block'
         result.innerText = `$$$$ You lose $${playerBetAmount.value}! $$$$`
     } else if (rollCount === 1){
-        //assign point to user's point
-        userpoint.innerText = `Now ${dice1 + dice2} is your bet`
+        displayUserPoint.innerText = `Your bet number is ${Number(dice1+dice2)} now`
+        userpoint = Number(dice1+dice2)
     }
-    if (rollCount > 1 && (dice1 + dice2) === Number(userpoint.innerText) && (dice1 + dice2)!== 7) {
+    if (rollCount > 1 && (dice1 + dice2) === Number(userpoint) && (dice1 + dice2)!== 7) {
         winAmount = Number(playerBetAmount.value) * 2
         cheque.innerText = Number(cheque.innerText) + winAmount
         rollBtn.style.display = 'none'
-        restartBtn.style.display ='inline'
+        restartBtn.style.display ='block'
         result.innerText = `$$$$ You win $${winAmount}! $$$$`
     } else if (rollCount > 1 && (dice1 + dice2) === 7) {
         rollBtn.style.display = 'none'
-        restartBtn.style.display ='inline'
+        restartBtn.style.display ='block'
         result.innerText = `$$$$ You lose $${playerBetAmount.value}! $$$$`
     }
 }
@@ -273,11 +274,12 @@ function handleRestart() {
     for(let button of ruleBtn) {
         button.style.display = 'inline';
     }
-    rollBtn.style.display = 'inline'
+    rollBtn.style.display = 'block'
     playerBetAmount.value = ''
     playerBetNumber.value = ''
     result.innerText = ''
-    userpoint.innerText = ''
+    displayUserPoint.innerText = ''
+    userpoint = 0
     error.textContent = ''
     error1.textContent = ''
     error2.textContent = ''

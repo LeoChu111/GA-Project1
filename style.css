@@ -1,8 +1,61 @@
+* {
+    box-sizing: border-box;
+}
+body, html {
+    height: 100%;
+  }
+body {
+    background-image: url(https://png.pngtree.com/thumb_back/fh260/background/20210831/pngtree-classy-luxury-casino-game-background-image_774371.jpg);
+    background-repeat: no-repeat;
+    height: 100%;
+    background-size: cover;
+    margin: auto;
+    background-position: center;
+}
+header {
+    text-align: center;
+    color: white;
+    font-size: 36px;
+}
+p {
+    text-align: center;
+    color: white;
+    margin: 15px 0 15px 0;
+}
+span {
+    color: white;
+    margin: 20px 0 20px 0;
+}
+input {
+    display: block;
+    margin: 0 auto;
+}
+button {
+    display: block;
+    margin: 0 auto;
+}
+#passline {
+    display: inline;
+    margin: 0 auto;
+}
+#bet {
+    display: inline;
+    margin: 0 auto;
+}
+div {
+    text-align: center;
+}
+footer {
+    text-align: center;
+    color: red;
+    margin: 15px 0 15px 0;
+}
 img {
     width: 100px;
 }
 .restart {
     display: none;
+    margin: 0 auto;
 }
 .text {
     display: none;
